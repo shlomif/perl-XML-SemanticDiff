@@ -1,11 +1,12 @@
 Changes
+eg/camelids2.xml
+eg/camelids.xml
+eg/xmlsemdiff
+lib/XML/SemanticDiff/BasicHandler.pm
+lib/XML/SemanticDiff.pm
 Makefile.PL
 MANIFEST
-lib/XML/SemanticDiff.pm
-lib/XML/SemanticDiff/BasicHandler.pm
-eg/xmlsemdiff
-eg/camelids.xml
-eg/camelids2.xml
+META.yml                                 Module meta-data (added by MakeMaker)
 t/01basic.t
 t/02load_xml.t
 t/03simple_compare.t
@@ -14,4 +15,4 @@ t/05simple_handler.t
 t/06pass_to_handler.t
 t/07pitest.t
 t/08nonexist_ns.t
-META.yml                                 Module meta-data (added by MakeMaker)
+t/09two-tags.t

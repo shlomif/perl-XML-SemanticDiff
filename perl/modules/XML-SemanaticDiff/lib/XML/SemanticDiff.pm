@@ -82,6 +82,7 @@ sub compare {
         if (defined $to_doc->{$element}) {
 
             # element value test
+            print $element, "\n";
             unless ($from_doc->{$element}->{TextChecksum} eq $to_doc->{$element}->{TextChecksum}) {
                 push (@warnings, $handler->element_value($element, 
                                                          $to_doc->{$element}, 
@@ -161,22 +162,40 @@ my $char_accumulator = {};
 my $doc = {};
 my $opts = {};
 
+my $xml_context = [];
+
 sub StartTag {
     my ($expat, $element) = @_;
+
+
     my %attrs = %_;
             
     my @context = $expat->context;
     my $context_length = scalar (@context);
     my $parent = $context[$context_length -1];
     push (@{$descendents->{$parent}}, $element) if $parent;
-    $position_index->{"$element"}++;
+
+    push @{$xml_context}, 
+        {
+            element => "$element", 
+            'index' => ++$position_index->{"$element"},
+        };
+
     my $test_context;
  
+=begin Discard
+
+
     if (@context){
         $test_context = '/' . join ('/', map { $_ . '[' . $position_index->{$_} . ']' } @context);
     }   
         
     $test_context .= '/' . $element . '[' . $position_index->{$element} . ']';
+=end
+
+=cut
+
+    $test_context = _calc_test_context();
 
     $doc->{"$test_context"}->{NamespaceURI} = $expat->namespace($element) || "";
     $doc->{"$test_context"}->{Attributes}   = \%attrs || {};
@@ -184,19 +203,31 @@ sub StartTag {
 
 }
 
+sub _calc_test_context
+{
+    return "/" . join("/", map { $_->{'element'} . "[" . $_->{'index'} . "]" } @$xml_context);
+}
+
 sub EndTag {
     my ($expat, $element) = @_;
     
-    
     my @context = $expat->context;
-    my $test_context;
-            
+
+=begin Discard
+
+
     if (@context){
         $test_context = '/' . join ('/', map { $_ . '[' . $position_index->{$_} . ']' } @context);
     }
          
     $test_context .= '/' . $element . '[' . $position_index->{$element} . ']';
-            
+
+=end
+
+=cut
+
+    my $test_context = _calc_test_context();
+
     my $text;
     if ( defined( $char_accumulator->{$element} )) { 
         $text = $char_accumulator->{$element};
@@ -225,7 +256,7 @@ sub EndTag {
     
     $doc->{"$test_context"}->{TagEnd} = $expat->current_line if $opts->{keeplinenums};
 
-    $position_index->{$element}--;        
+    pop(@$xml_context);
 }
 
 sub Text {
@@ -247,7 +278,8 @@ sub StartDocument {
     $descendents = {};
     $position_index = {};
     $char_accumulator = {};
-    $opts = $expat->{'Non-Expat-Options'}
+    $opts = $expat->{'Non-Expat-Options'};
+    $xml_context = [];
 }
         
 sub EndDocument {
