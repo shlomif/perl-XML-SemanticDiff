@@ -82,7 +82,6 @@ sub compare {
         if (defined $to_doc->{$element}) {
 
             # element value test
-            print $element, "\n";
             unless ($from_doc->{$element}->{TextChecksum} eq $to_doc->{$element}->{TextChecksum}) {
                 push (@warnings, $handler->element_value($element, 
                                                          $to_doc->{$element}, 
