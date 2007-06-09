@@ -1,0 +1,16 @@
+Revision history for Perl extension XML::SemanticDiff.
+0.93  June 14 2001
+	- third (hopefully final) BETA
+	- more doc fixes.
+
+0.91  June 12 2001
+	- second BETA release.
+        - code cleanup.
+	- major doc fixes. 
+
+0.50  May 25 2001
+	- initial public BETA release. 
+
+0.01  Thu May 24 10:09:38 2001
+	- original version; created by h2xs 1.19
+

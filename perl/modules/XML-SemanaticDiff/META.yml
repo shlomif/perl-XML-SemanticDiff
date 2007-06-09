@@ -1,0 +1,13 @@
+--- #YAML:1.0
+name:                XML-SemanticDiff
+version:             0.95
+abstract:            ~
+license:             ~
+generated_by:        ExtUtils::MakeMaker version 6.31
+distribution_type:   module
+requires:     
+    Digest::MD5:                   0
+    XML::Parser:                   0
+meta-spec:
+    url:     http://module-build.sourceforge.net/META-spec-v1.2.html
+    version: 1.2
