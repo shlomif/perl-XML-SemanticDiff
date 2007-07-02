@@ -161,12 +161,14 @@ use Digest::MD5  qw(md5_base64);
 use Encode qw(encode_utf8);
 
 my $descendents = {};
-my $position_index = {};
 my $char_accumulator = {};
 my $doc = {};
 my $opts = {};
 
 my $xml_context = [];
+
+# The position index for the PI's below - the processing instructions.
+my $PI_position_index = {};
 
 sub StartTag {
     my ($expat, $element) = @_;
@@ -179,10 +181,13 @@ sub StartTag {
     my $parent = $context[$context_length -1];
     push (@{$descendents->{$parent}}, $element) if $parent;
 
+    my $last_ctx_elem = $xml_context->[-1] || { position_index => {}};
+
     push @{$xml_context}, 
         {
             element => "$element", 
-            'index' => ++$position_index->{"$element"},
+            'index' => ++$last_ctx_elem->{position_index}->{"$element"},
+            position_index => {},
         };
 
     my $test_context;
@@ -280,26 +285,27 @@ sub StartDocument {
     my $expat = shift;
     $doc = {};
     $descendents = {};
-    $position_index = {};
     $char_accumulator = {};
     $opts = $expat->{'Non-Expat-Options'};
     $xml_context = [];
+    $PI_position_index = {};
 }
         
 sub EndDocument {
     return $doc;
 }
-    
+
+
 sub PI {
     my ($expat, $target, $data) = @_;
     my $attrs = {};
-    $position_index->{$target}++;
+    $PI_position_index->{$target}++;
 
     foreach my $pair (split /\s+/, $data) {
         $attrs->{$1} = $2 if $pair =~ /^(.+?)=["'](.+?)["']$/;
     }
 
-    my $slug = '?' . $target . '[' . $position_index->{$target} . ']';
+    my $slug = '?' . $target . '[' . $PI_position_index->{$target} . ']';
 
     $doc->{$slug}->{Attributes} = $attrs || {};
     $doc->{$slug}->{TextChecksum} = "1";

@@ -11,6 +11,13 @@ Revision history for Perl extension XML::SemanticDiff.
           characters.
         - Thanks to RMBARKER
         - t/10wide-cahrs.t
+    - Applied a modified version of:
+        http://rt.cpan.org/Ticket/Display.html?id=18491
+        - Fixes a case where the same tags in different places with
+        identical contents, are not considered semantically identical.
+        - Thanks to CLOTHO for reporting it and suggesting a
+        fix.
+        - t/11tag-in-different-locations.t
 
 0.95
     [ Undocumented changelog. ]
