@@ -18,6 +18,10 @@ Revision history for Perl extension XML::SemanticDiff.
         - Thanks to CLOTHO for reporting it and suggesting a
         fix.
         - t/11tag-in-different-locations.t
+    - Added a regression test against bug:
+        http://rt.cpan.org/Ticket/Display.html?id=2322
+        - Seems to already have been fixed.
+        - t/12missing-element-has-o-as-cdata.t
 
 0.95
     [ Undocumented changelog. ]
