@@ -1,9 +1,11 @@
-use Test;
-BEGIN { plan tests => 2 }
+use strict;
+use warnings;
+
+use Test::More tests => 2;
 
 use XML::SemanticDiff;
 
-$xml1 = <<'EOX';      
+my $xml1 = <<'EOX';      
 <?xml version="1.0"?>
 <root>
 <el1 el1attr="good"/>
@@ -12,7 +14,7 @@ $xml1 = <<'EOX';
 </root>
 EOX
 
-$xml2 = <<'EOX';      
+my $xml2 = <<'EOX';      
 <?xml version="1.0"?>
 <root>
 <el1 el1attr="bad"/>
@@ -25,8 +27,13 @@ my $diff = XML::SemanticDiff->new();
 
 my @results = $diff->compare($xml1, $xml2);
 
-ok(@results == 6);
+# TEST
+is (scalar(@results), 6, 
+    "Number of results in comparing two different XML texts"
+);
 
 @results = $diff->compare($xml1, $xml1);
 
-ok(@results == 0);
+# TEST
+ok ((!@results), "Identical XMLs generate identical results");
+
