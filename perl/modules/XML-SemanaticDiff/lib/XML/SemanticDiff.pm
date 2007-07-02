@@ -153,8 +153,13 @@ sub compare {
 1;
 
 package PathFinder;
+
 use strict;
-use Digest::MD5  qw(md5_base64);    
+
+use Digest::MD5  qw(md5_base64);
+
+use Encode qw(encode_utf8);
+
 my $descendents = {};
 my $position_index = {};
 my $char_accumulator = {};
@@ -239,7 +244,7 @@ sub EndTag {
 #    $ctx->add("$text");
 #    $doc->{"$test_context"}->{TextChecksum} = $ctx->b64digest;
 
-    $doc->{"$test_context"}->{TextChecksum} = md5_base64("$text");
+    $doc->{"$test_context"}->{TextChecksum} = md5_base64(encode_utf8("$text"));
     if ($opts->{keepdata}) {
         $doc->{"$test_context"}->{CData} = $text;
     }

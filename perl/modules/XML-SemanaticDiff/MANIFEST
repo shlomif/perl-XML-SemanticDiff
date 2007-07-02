@@ -16,3 +16,4 @@ t/06pass_to_handler.t
 t/07pitest.t
 t/08nonexist_ns.t
 t/09two-tags.t
+t/10wide-chars.t
