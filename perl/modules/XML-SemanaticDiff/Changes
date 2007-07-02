@@ -10,7 +10,7 @@ Revision history for Perl extension XML::SemanticDiff.
         - Fixes an exception when comparing XML with multi-byte 
           characters.
         - Thanks to RMBARKER
-        - t/10wide-cahrs.t
+        - t/10wide-chars.t
     - Applied a modified version of:
         http://rt.cpan.org/Ticket/Display.html?id=18491
         - Fixes a case where the same tags in different places with
