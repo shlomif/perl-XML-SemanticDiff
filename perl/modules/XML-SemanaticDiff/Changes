@@ -1,4 +1,19 @@
 Revision history for Perl extension XML::SemanticDiff.
+
+    - Fixed the warning emitted with the namespaces being undefined.
+      (t/8nonexist_ns.t)
+    - Fixed the search algorithm so it will identify the location of the
+      XML tags properly. (t/09two-tags.t)
+    - Applied a modified version of:
+        http://rt.cpan.org/Ticket/Display.html?id=24715
+        - Fixes an exception when comparing XML with multi-byte 
+          characters.
+        - Thanks to RMBARKER
+        - t/10wide-cahrs.t
+
+0.95
+    [ Undocumented changelog. ]
+
 0.93  June 14 2001
 	- third (hopefully final) BETA
 	- more doc fixes.
