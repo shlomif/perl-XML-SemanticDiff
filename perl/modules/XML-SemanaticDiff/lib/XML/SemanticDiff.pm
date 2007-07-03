@@ -3,7 +3,7 @@ package XML::SemanticDiff;
 use strict;
 use vars qw/$VERSION/;
 
-$VERSION = '0.95';
+$VERSION = '0.96';
 
 use XML::Parser;
 
@@ -445,12 +445,18 @@ that all of those events will be silently ignored. Consider yourself warned.
 
 =head1 AUTHOR
 
-Kip Hampton, khampton@totalcinema.com
+Originally by Kip Hampton, khampton@totalcinema.com .
+
+Further Maintained by Shlomi Fish, shlomif@iglu.org.il .
 
 =head1 COPYRIGHT
 
-Copyright (c) 2000 Kip Hampton. All rights reserved. This program is free software; you can redistribute it and/or modify it 
-under the same terms as Perl itself.
+Copyright (c) 2000 Kip Hampton. All rights reserved. This program is 
+free software; you can redistribute it and/or modify it under the same terms 
+as Perl itself.
+
+Shlomi Fish hereby disclaims any implicit or explicit copyrights on this
+software.
 
 =head1 SEE ALSO
 

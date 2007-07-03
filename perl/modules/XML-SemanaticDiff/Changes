@@ -1,5 +1,6 @@
 Revision history for Perl extension XML::SemanticDiff.
 
+0.96  July 03 2007
     - Fixed the warning emitted with the namespaces being undefined.
       (t/8nonexist_ns.t)
         - fixes http://rt.cpan.org/Public/Bug/Display.html?id=1379
@@ -23,7 +24,7 @@ Revision history for Perl extension XML::SemanticDiff.
         - Seems to already have been fixed.
         - t/12missing-element-has-o-as-cdata.t
 
-0.95
+0.95  April 09 2002
     [ Undocumented changelog. ]
 
 0.93  June 14 2001
