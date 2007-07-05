@@ -1,5 +1,7 @@
 Revision history for Perl extension XML::SemanticDiff.
 
+    - Added the README
+
 0.96  July 03 2007
     - Fixed the warning emitted with the namespaces being undefined.
       (t/8nonexist_ns.t)
