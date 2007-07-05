@@ -1,13 +1,26 @@
---- #YAML:1.0
-name:                XML-SemanticDiff
-version:             0.95
-abstract:            ~
-license:             ~
-generated_by:        ExtUtils::MakeMaker version 6.31
-distribution_type:   module
-requires:     
-    Digest::MD5:                   0
-    XML::Parser:                   0
+---
+name: XML-SemanticDiff
+version: 0.96
+author:
+  - 'Kip Hampton <khampton@cpan.org>'
+abstract: Perl extension for comparing XML documents.
+license: perl
+resources:
+  license: http://dev.perl.org/licenses/
+requires:
+  Digest::MD5: 0
+  Encode: 0
+  XML::Parser: 0
+provides:
+  PathFinder:
+    file: lib/XML/SemanticDiff.pm
+  XML::SemanticDiff:
+    file: lib/XML/SemanticDiff.pm
+    version: 0.96
+  XML::SemanticDiff::BasicHandler:
+    file: lib/XML/SemanticDiff/BasicHandler.pm
+    version: 0.93
+generated_by: Module::Build version 0.2805
 meta-spec:
-    url:     http://module-build.sourceforge.net/META-spec-v1.2.html
-    version: 1.2
+  url: http://module-build.sourceforge.net/META-spec-v1.2.html
+  version: 1.2
