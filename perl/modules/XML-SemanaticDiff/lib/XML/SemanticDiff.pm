@@ -231,7 +231,7 @@ sub EndTag {
          
     $test_context .= '/' . $element . '[' . $position_index->{$element} . ']';
 
-=end
+=end Discard
 
 =cut
 
