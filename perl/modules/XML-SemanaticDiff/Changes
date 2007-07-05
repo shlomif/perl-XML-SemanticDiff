@@ -1,6 +1,7 @@
 Revision history for Perl extension XML::SemanticDiff.
 
     - Added the README
+    - Specified the LICENSE (as "perl") explicitly in the Makefile.PL.
 
 0.96  July 03 2007
     - Fixed the warning emitted with the namespaces being undefined.

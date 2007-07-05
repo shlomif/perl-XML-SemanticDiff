@@ -13,4 +13,5 @@ WriteMakefile(
         'XML::Parser' => '0',
     },
     'EXE_FILES' => [ 'eg/xmlsemdiff' ],
+    'LICENSE' => "perl",
 );
