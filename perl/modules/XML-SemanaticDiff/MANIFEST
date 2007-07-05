@@ -7,6 +7,7 @@ lib/XML/SemanticDiff.pm
 Makefile.PL
 MANIFEST
 META.yml                                 Module meta-data (added by MakeMaker)
+README
 t/01basic.t
 t/02load_xml.t
 t/03simple_compare.t
