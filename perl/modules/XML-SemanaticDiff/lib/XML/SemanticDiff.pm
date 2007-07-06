@@ -380,6 +380,36 @@ Please see the section on 'CUSTOM HANDLERS' below.
 
 =back
 
+=head2 @results = $differ->compare($xml1, $xml2)
+
+Compares the XMLs $xml1 and $xml2 . $xml1 and $xml2 can be:
+
+=over 4
+
+=item * filenames
+
+This will be considered if it is a string that does not contain newlines and 
+exists in the filesystem.
+
+=item * the XML text itself.
+
+This will be considered if it's any kind of string.
+
+=item * the results of read_xml(). (see below)
+
+This will be considered if it's a hash reference.
+
+B<TODO>: change according to the spec.
+
+=back
+
+=head2 my $doc = read_xml($xml_location)
+
+This will read the XML, process it for comparison and return it. See compare()
+for how it is determined.
+
+B<TODO>: change according to the spec.
+
 =head1 CUSTOM HANDLERS
 
 Internally, XML::SemanticDiff uses an event-based model somewhat reminiscent of SAX where the various 'semantic diff events'

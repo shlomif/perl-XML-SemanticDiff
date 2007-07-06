@@ -153,8 +153,8 @@ sub parent_and_name {
 }
 
 1;
+
 __END__
-# Below is the stub of documentation for your module. You better edit it!
 
 =head1 NAME
 
@@ -175,6 +175,18 @@ This is the default event handler for XML::SemanticDiff. It implements nothing u
 never be used directly.
 
 Please run perldoc XML::SemanticDiff for more information.
+
+=head1 IMPLEMENTED METHODS (FOR INTERNAL USE)
+
+=head2 new
+=head2 rogue_element
+=head2 missing_element
+=head2 element_value
+=head2 rogue_attribute
+=head2 missing_attribute
+=head2 attribute_value
+=head2 namespace_uri
+=head2 parent_and_name
 
 =head1 AUTHOR
 
