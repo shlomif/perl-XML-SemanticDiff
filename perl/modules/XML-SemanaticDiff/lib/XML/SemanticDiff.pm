@@ -18,16 +18,36 @@ sub new {
     return $self;
 }
 
+sub _is_file
+{
+    my ($self, $specifier) = @_;
+    return $specifier !~ /\n/g && -f $specifier;
+}
+
 sub read_xml {
     my $self = shift;
-    my $p = XML::Parser->new( Style => 'Stream',
-                              Pkg   => 'PathFinder',
-                              'Non-Expat-Options' => $self,
-                              Namespaces => 1);
 
-    my $doc = $_[0] !~ /\n/g && -f $_[0] ? $p->parsefile($_[0]) : $p->parse($_[0]);
+    my ($xml_specifier) = @_;
 
-    return $doc;
+    if (ref($xml_specifier) eq 'HASH')
+    {
+        return $xml_specifier;
+    }
+    else
+    {
+        my $p = XML::Parser->new(
+            Style => 'Stream',
+            Pkg   => 'PathFinder',
+            'Non-Expat-Options' => $self,
+            Namespaces => 1
+        );
+
+        return
+            $self->_is_file($xml_specifier)
+                ? $p->parsefile($xml_specifier)
+                : $p->parse($xml_specifier)
+                ;
+    }
 }
 
 sub _same_namespace
@@ -64,7 +84,7 @@ sub compare {
     my $self = shift;
     my ($from_xml, $to_xml) = @_;
 
-    my $from_doc = ref($from_xml) eq 'HASH' ? $from_xml : $self->read_xml($from_xml);
+    my $from_doc = $self->read_xml($from_xml);
     my $to_doc = $self->read_xml($to_xml);
 
     my @warnings = ();
@@ -399,16 +419,12 @@ This will be considered if it's any kind of string.
 
 This will be considered if it's a hash reference.
 
-B<TODO>: change according to the spec.
-
 =back
 
 =head2 my $doc = read_xml($xml_location)
 
 This will read the XML, process it for comparison and return it. See compare()
 for how it is determined.
-
-B<TODO>: change according to the spec.
 
 =head1 CUSTOM HANDLERS
 

@@ -21,5 +21,6 @@ t/09two-tags.t
 t/10wide-chars.t
 t/11tag-in-different-locations.t
 t/12missing-element-has-o-as-cdata.t
+t/13to-doc-read.t
 t/pod-coverage.t
 t/pod.t

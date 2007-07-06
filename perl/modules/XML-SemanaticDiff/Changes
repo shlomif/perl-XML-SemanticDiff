@@ -9,6 +9,9 @@ Revision history for Perl extension XML::SemanticDiff.
       make sure the META.yml is according to the SPEC. (Kwalitee).
     - Added the t/pod-coverage.t file and made sure the files have
       full POD coverage. (Kwalitee)
+    - Made sure the second argument in compare can accept a processed
+      XML result, and refactored the code in the process. Added the
+      t/13to-doc-read.t test file.
 
 0.96  July 03 2007
     - Fixed the warning emitted with the namespaces being undefined.
