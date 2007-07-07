@@ -37,7 +37,7 @@ sub read_xml {
     {
         my $p = XML::Parser->new(
             Style => 'Stream',
-            Pkg   => 'PathFinder',
+            Pkg   => 'XML::SemanticDiff::PathFinder',
             'Non-Expat-Options' => $self,
             Namespaces => 1
         );
@@ -172,7 +172,7 @@ sub compare {
 
 1;
 
-package PathFinder;
+package XML::SemanticDiff::PathFinder;
 
 use strict;
 

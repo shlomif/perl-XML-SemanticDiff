@@ -12,6 +12,9 @@ Revision history for Perl extension XML::SemanticDiff.
     - Made sure the second argument in compare can accept a processed
       XML result, and refactored the code in the process. Added the
       t/13to-doc-read.t test file.
+    - Converted the "PathFinder" package in lib/XML/SemanticDiff.pm
+      to "XML::SemanticDiff::PathFinder" to maintain namespace
+      purity.
 
 0.96  July 03 2007
     - Fixed the warning emitted with the namespaces being undefined.
