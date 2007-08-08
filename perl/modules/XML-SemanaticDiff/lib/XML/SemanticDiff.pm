@@ -200,7 +200,7 @@ use Digest::MD5  qw(md5_base64);
 
 use Encode qw(encode_utf8);
 
-foreach my $accessor (qw(descendents char_accumulator doc))
+foreach my $accessor (qw(descendents char_accumulator doc opts))
 {
     no strict 'refs';
     *{__PACKAGE__.'::'.$accessor} = sub {
@@ -213,8 +213,6 @@ foreach my $accessor (qw(descendents char_accumulator doc))
         return $self->{$accessor};
     };
 }
-
-my $opts = {};
 
 my $xml_context = [];
 
@@ -274,7 +272,7 @@ sub StartTag {
 
     $self->doc()->{"$test_context"}->{NamespaceURI} = $expat->namespace($element) || "";
     $self->doc()->{"$test_context"}->{Attributes}   = \%attrs || {};
-    $self->doc()->{"$test_context"}->{TagStart}     = $expat->current_line if $opts->{keeplinenums};
+    $self->doc()->{"$test_context"}->{TagStart}     = $expat->current_line if $self->opts()->{keeplinenums};
 
 }
 
@@ -316,7 +314,7 @@ sub EndTag {
 #    $self->doc()->{"$test_context"}->{TextChecksum} = $ctx->b64digest;
 
     $self->doc()->{"$test_context"}->{TextChecksum} = md5_base64(encode_utf8("$text"));
-    if ($opts->{keepdata}) {
+    if ($self->opts()->{keepdata}) {
         $self->doc()->{"$test_context"}->{CData} = $text;
     }
     
@@ -329,7 +327,7 @@ sub EndTag {
         }
     }
     
-    $self->doc()->{"$test_context"}->{TagEnd} = $expat->current_line if $opts->{keeplinenums};
+    $self->doc()->{"$test_context"}->{TagEnd} = $expat->current_line if $self->opts()->{keeplinenums};
 
     pop(@$xml_context);
 }
@@ -354,7 +352,7 @@ sub StartDocument {
     $self->doc({});
     $self->descendents({});
     $self->char_accumulator({});
-    $opts = $expat->{'Non-Expat-Options'};
+    $self->opts($expat->{'Non-Expat-Options'});
     $xml_context = [];
     $PI_position_index = {};
 }
@@ -380,8 +378,8 @@ sub PI {
     $self->doc()->{$slug}->{Attributes} = $attrs || {};
     $self->doc()->{$slug}->{TextChecksum} = "1";
     $self->doc()->{$slug}->{NamespaceURI} = "";
-    $self->doc()->{$slug}->{TagStart} = $expat->current_line if $opts->{keeplinenums};
-    $self->doc()->{$slug}->{TagEnd} = $expat->current_line if $opts->{keeplinenums};
+    $self->doc()->{$slug}->{TagStart} = $expat->current_line if $self->opts()->{keeplinenums};
+    $self->doc()->{$slug}->{TagEnd} = $expat->current_line if $self->opts()->{keeplinenums};
 
 }   
 
