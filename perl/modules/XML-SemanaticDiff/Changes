@@ -1,5 +1,6 @@
 Revision history for Perl extension XML::SemanticDiff.
 
+0.97  August 08 2007
     - Added the README (Kwalitee)
     - Specified the LICENSE (as "perl") explicitly in the Makefile.PL. 
       (Kwalitee)
@@ -15,6 +16,8 @@ Revision history for Perl extension XML::SemanticDiff.
     - Converted the "PathFinder" package in lib/XML/SemanticDiff.pm
       to "XML::SemanticDiff::PathFinder" to maintain namespace
       purity.
+    - Converted the Pkg to use an object using Non-Expat-Options. Made the 
+      global variables as class members using accessors.
 
 0.96  July 03 2007
     - Fixed the warning emitted with the namespaces being undefined.

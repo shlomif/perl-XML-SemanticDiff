@@ -3,7 +3,7 @@ package XML::SemanticDiff;
 use strict;
 use vars qw/$VERSION/;
 
-$VERSION = '0.96';
+$VERSION = '0.97';
 
 use XML::Parser;
 
