@@ -200,7 +200,7 @@ use Digest::MD5  qw(md5_base64);
 
 use Encode qw(encode_utf8);
 
-foreach my $accessor (qw(descendents char_accumulator doc opts))
+foreach my $accessor (qw(descendents char_accumulator doc opts xml_context))
 {
     no strict 'refs';
     *{__PACKAGE__.'::'.$accessor} = sub {
@@ -213,8 +213,6 @@ foreach my $accessor (qw(descendents char_accumulator doc opts))
         return $self->{$accessor};
     };
 }
-
-my $xml_context = [];
 
 # The position index for the PI's below - the processing instructions.
 my $PI_position_index = {};
@@ -245,9 +243,9 @@ sub StartTag {
     my $parent = $context[$context_length -1];
     push (@{$self->descendents()->{$parent}}, $element) if $parent;
 
-    my $last_ctx_elem = $xml_context->[-1] || { position_index => {}};
+    my $last_ctx_elem = $self->xml_context()->[-1] || { position_index => {}};
 
-    push @{$xml_context}, 
+    push @{$self->xml_context()}, 
         {
             element => "$element", 
             'index' => ++$last_ctx_elem->{position_index}->{"$element"},
@@ -268,7 +266,7 @@ sub StartTag {
 
 =cut
 
-    $test_context = _calc_test_context();
+    $test_context = $self->_calc_test_context();
 
     $self->doc()->{"$test_context"}->{NamespaceURI} = $expat->namespace($element) || "";
     $self->doc()->{"$test_context"}->{Attributes}   = \%attrs || {};
@@ -278,7 +276,13 @@ sub StartTag {
 
 sub _calc_test_context
 {
-    return "/" . join("/", map { $_->{'element'} . "[" . $_->{'index'} . "]" } @$xml_context);
+    my $self = shift;
+
+    return 
+        join("", 
+            map { "/". $_->{'element'} . "[" . $_->{'index'} . "]" } 
+            @{$self->xml_context()}
+        );
 }
 
 sub EndTag {
@@ -299,7 +303,7 @@ sub EndTag {
 
 =cut
 
-    my $test_context = _calc_test_context();
+    my $test_context = $self->_calc_test_context();
 
     my $text;
     if ( defined( $self->char_accumulator()->{$element} )) { 
@@ -329,7 +333,7 @@ sub EndTag {
     
     $self->doc()->{"$test_context"}->{TagEnd} = $expat->current_line if $self->opts()->{keeplinenums};
 
-    pop(@$xml_context);
+    pop(@{$self->xml_context()});
 }
 
 sub Text {
@@ -353,7 +357,7 @@ sub StartDocument {
     $self->descendents({});
     $self->char_accumulator({});
     $self->opts($expat->{'Non-Expat-Options'});
-    $xml_context = [];
+    $self->xml_context([]);
     $PI_position_index = {};
 }
         
