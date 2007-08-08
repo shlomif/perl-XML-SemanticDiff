@@ -200,7 +200,8 @@ use Digest::MD5  qw(md5_base64);
 
 use Encode qw(encode_utf8);
 
-foreach my $accessor (qw(descendents char_accumulator doc opts xml_context))
+foreach my $accessor (qw(descendents char_accumulator doc
+    opts xml_context PI_position_index))
 {
     no strict 'refs';
     *{__PACKAGE__.'::'.$accessor} = sub {
@@ -214,8 +215,8 @@ foreach my $accessor (qw(descendents char_accumulator doc opts xml_context))
     };
 }
 
-# The position index for the PI's below - the processing instructions.
-my $PI_position_index = {};
+# PI_position_index is the position index for the PI's below - the processing 
+# instructions.
 
 sub new {
     my $class = shift;
@@ -358,7 +359,7 @@ sub StartDocument {
     $self->char_accumulator({});
     $self->opts($expat->{'Non-Expat-Options'});
     $self->xml_context([]);
-    $PI_position_index = {};
+    $self->PI_position_index({});
 }
         
 sub EndDocument {
@@ -371,13 +372,13 @@ sub EndDocument {
 sub PI {
     my ($self, $expat, $target, $data) = @_;
     my $attrs = {};
-    $PI_position_index->{$target}++;
+    $self->PI_position_index()->{$target}++;
 
     foreach my $pair (split /\s+/, $data) {
         $attrs->{$1} = $2 if $pair =~ /^(.+?)=["'](.+?)["']$/;
     }
 
-    my $slug = '?' . $target . '[' . $PI_position_index->{$target} . ']';
+    my $slug = '?' . $target . '[' . $self->PI_position_index()->{$target} . ']';
 
     $self->doc()->{$slug}->{Attributes} = $attrs || {};
     $self->doc()->{$slug}->{TextChecksum} = "1";
