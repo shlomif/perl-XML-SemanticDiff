@@ -269,10 +269,15 @@ sub StartTag {
 
     $test_context = $self->_calc_test_context();
 
-    $self->doc()->{"$test_context"}->{NamespaceURI} = $expat->namespace($element) || "";
-    $self->doc()->{"$test_context"}->{Attributes}   = \%attrs || {};
-    $self->doc()->{"$test_context"}->{TagStart}     = $expat->current_line if $self->opts()->{keeplinenums};
-
+    $self->doc()->{$test_context} = 
+    {
+        NamespaceURI => ($expat->namespace($element) || ""),
+        Attributes   => \%attrs,
+        ($self->opts()->{keeplinenums}
+            ? ( TagStart => $expat->current_line) 
+            : ()
+        ),
+    };
 }
 
 sub _calc_test_context
