@@ -200,7 +200,7 @@ use Digest::MD5  qw(md5_base64);
 
 use Encode qw(encode_utf8);
 
-foreach my $accessor (qw(descendents char_accumulator))
+foreach my $accessor (qw(descendents char_accumulator doc))
 {
     no strict 'refs';
     *{__PACKAGE__.'::'.$accessor} = sub {
@@ -214,7 +214,6 @@ foreach my $accessor (qw(descendents char_accumulator))
     };
 }
 
-my $doc = {};
 my $opts = {};
 
 my $xml_context = [];
@@ -273,9 +272,9 @@ sub StartTag {
 
     $test_context = _calc_test_context();
 
-    $doc->{"$test_context"}->{NamespaceURI} = $expat->namespace($element) || "";
-    $doc->{"$test_context"}->{Attributes}   = \%attrs || {};
-    $doc->{"$test_context"}->{TagStart}     = $expat->current_line if $opts->{keeplinenums};
+    $self->doc()->{"$test_context"}->{NamespaceURI} = $expat->namespace($element) || "";
+    $self->doc()->{"$test_context"}->{Attributes}   = \%attrs || {};
+    $self->doc()->{"$test_context"}->{TagStart}     = $expat->current_line if $opts->{keeplinenums};
 
 }
 
@@ -314,11 +313,11 @@ sub EndTag {
 #    warn "text is '$text' \n";
 #    my $ctx = Digest::MD5->new;
 #    $ctx->add("$text");
-#    $doc->{"$test_context"}->{TextChecksum} = $ctx->b64digest;
+#    $self->doc()->{"$test_context"}->{TextChecksum} = $ctx->b64digest;
 
-    $doc->{"$test_context"}->{TextChecksum} = md5_base64(encode_utf8("$text"));
+    $self->doc()->{"$test_context"}->{TextChecksum} = md5_base64(encode_utf8("$text"));
     if ($opts->{keepdata}) {
-        $doc->{"$test_context"}->{CData} = $text;
+        $self->doc()->{"$test_context"}->{CData} = $text;
     }
     
     
@@ -330,7 +329,7 @@ sub EndTag {
         }
     }
     
-    $doc->{"$test_context"}->{TagEnd} = $expat->current_line if $opts->{keeplinenums};
+    $self->doc()->{"$test_context"}->{TagEnd} = $expat->current_line if $opts->{keeplinenums};
 
     pop(@$xml_context);
 }
@@ -352,7 +351,7 @@ sub Text {
 sub StartDocument {
     my $self = shift;
     my $expat = shift;
-    $doc = {};
+    $self->doc({});
     $self->descendents({});
     $self->char_accumulator({});
     $opts = $expat->{'Non-Expat-Options'};
@@ -363,7 +362,7 @@ sub StartDocument {
 sub EndDocument {
     my $self = shift;
 
-    return $doc;
+    return $self->doc();
 }
 
 
@@ -378,11 +377,11 @@ sub PI {
 
     my $slug = '?' . $target . '[' . $PI_position_index->{$target} . ']';
 
-    $doc->{$slug}->{Attributes} = $attrs || {};
-    $doc->{$slug}->{TextChecksum} = "1";
-    $doc->{$slug}->{NamespaceURI} = "";
-    $doc->{$slug}->{TagStart} = $expat->current_line if $opts->{keeplinenums};
-    $doc->{$slug}->{TagEnd} = $expat->current_line if $opts->{keeplinenums};
+    $self->doc()->{$slug}->{Attributes} = $attrs || {};
+    $self->doc()->{$slug}->{TextChecksum} = "1";
+    $self->doc()->{$slug}->{NamespaceURI} = "";
+    $self->doc()->{$slug}->{TagStart} = $expat->current_line if $opts->{keeplinenums};
+    $self->doc()->{$slug}->{TagEnd} = $expat->current_line if $opts->{keeplinenums};
 
 }   
 
