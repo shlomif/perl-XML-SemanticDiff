@@ -200,7 +200,7 @@ use Digest::MD5  qw(md5_base64);
 
 use Encode qw(encode_utf8);
 
-foreach my $accessor (qw(descendents))
+foreach my $accessor (qw(descendents char_accumulator))
 {
     no strict 'refs';
     *{__PACKAGE__.'::'.$accessor} = sub {
@@ -214,7 +214,6 @@ foreach my $accessor (qw(descendents))
     };
 }
 
-my $char_accumulator = {};
 my $doc = {};
 my $opts = {};
 
@@ -306,9 +305,9 @@ sub EndTag {
     my $test_context = _calc_test_context();
 
     my $text;
-    if ( defined( $char_accumulator->{$element} )) { 
-        $text = $char_accumulator->{$element};
-        delete $char_accumulator->{$element};
+    if ( defined( $self->char_accumulator()->{$element} )) { 
+        $text = $self->char_accumulator()->{$element};
+        delete $self->char_accumulator()->{$element};
     }
     $text ||= 'o';
     
@@ -346,7 +345,7 @@ sub Text {
     $char =~ s/^\s*//;
     $char =~ s/\s*$//;
     $char =~ s/\s+/ /g;
-    $char_accumulator->{$element} .= $char if $char;
+    $self->char_accumulator()->{$element} .= $char if $char;
     
 }
         
@@ -355,7 +354,7 @@ sub StartDocument {
     my $expat = shift;
     $doc = {};
     $self->descendents({});
-    $char_accumulator = {};
+    $self->char_accumulator({});
     $opts = $expat->{'Non-Expat-Options'};
     $xml_context = [];
     $PI_position_index = {};
