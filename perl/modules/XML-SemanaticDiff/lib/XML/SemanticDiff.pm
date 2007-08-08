@@ -200,7 +200,20 @@ use Digest::MD5  qw(md5_base64);
 
 use Encode qw(encode_utf8);
 
-my $descendents = {};
+foreach my $accessor (qw(descendents))
+{
+    no strict 'refs';
+    *{__PACKAGE__.'::'.$accessor} = sub {
+        my $self = shift;
+
+        if (@_)
+        {
+            $self->{$accessor} = shift;
+        }
+        return $self->{$accessor};
+    };
+}
+
 my $char_accumulator = {};
 my $doc = {};
 my $opts = {};
@@ -234,7 +247,7 @@ sub StartTag {
     my @context = $expat->context;
     my $context_length = scalar (@context);
     my $parent = $context[$context_length -1];
-    push (@{$descendents->{$parent}}, $element) if $parent;
+    push (@{$self->descendents()->{$parent}}, $element) if $parent;
 
     my $last_ctx_elem = $xml_context->[-1] || { position_index => {}};
 
@@ -310,9 +323,9 @@ sub EndTag {
     }
     
     
-    if (defined ( $descendents->{$element})) {
+    if (defined ( $self->descendents()->{$element})) {
         my $seen = {};
-        foreach my $child (@{$descendents->{$element}}) {
+        foreach my $child (@{$self->descendents()->{$element}}) {
             next if $seen->{$child};
             $seen->{$child}++;
         }
@@ -341,7 +354,7 @@ sub StartDocument {
     my $self = shift;
     my $expat = shift;
     $doc = {};
-    $descendents = {};
+    $self->descendents({});
     $char_accumulator = {};
     $opts = $expat->{'Non-Expat-Options'};
     $xml_context = [];
