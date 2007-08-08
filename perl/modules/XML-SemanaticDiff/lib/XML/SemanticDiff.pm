@@ -35,6 +35,9 @@ sub read_xml {
     }
     else
     {
+        my $path_finder = XML::SemanticDiff::PathFinder::Obj->new();
+        $self->{path_finder_obj} = $path_finder;
+
         my $p = XML::Parser->new(
             Style => 'Stream',
             Pkg   => 'XML::SemanticDiff::PathFinder',
@@ -42,11 +45,15 @@ sub read_xml {
             Namespaces => 1
         );
 
-        return
+        my $ret =
             $self->_is_file($xml_specifier)
                 ? $p->parsefile($xml_specifier)
                 : $p->parse($xml_specifier)
                 ;
+        
+        $self->{path_finder_obj} = undef;
+
+        return $ret;
     }
 }
 
@@ -174,6 +181,19 @@ sub compare {
 
 package XML::SemanticDiff::PathFinder;
 
+foreach my $func (qw(StartTag EndTag Text StartDocument EndDocument PI))
+{
+    no strict 'refs';
+    *{__PACKAGE__.'::'.$func} = sub {
+        my $expat = shift;
+        return $expat->{'Non-Expat-Options'}->{path_finder_obj}->$func(
+            $expat, @_
+        );
+    };
+}
+
+package XML::SemanticDiff::PathFinder::Obj;
+
 use strict;
 
 use Digest::MD5  qw(md5_base64);
@@ -190,8 +210,23 @@ my $xml_context = [];
 # The position index for the PI's below - the processing instructions.
 my $PI_position_index = {};
 
+sub new {
+    my $class = shift;
+
+    my $self = {};
+    bless $self, $class;
+
+    $self->_init(@_);
+
+    return $self;
+}
+
+sub _init {
+    return 0;
+}
+
 sub StartTag {
-    my ($expat, $element) = @_;
+    my ($self, $expat, $element) = @_;
 
 
     my %attrs = %_;
@@ -238,7 +273,7 @@ sub _calc_test_context
 }
 
 sub EndTag {
-    my ($expat, $element) = @_;
+    my ($self, $expat, $element) = @_;
     
     my @context = $expat->context;
 
@@ -289,6 +324,7 @@ sub EndTag {
 }
 
 sub Text {
+    my $self = shift;
     my $expat = shift;
     
     my $element = $expat->current_element;
@@ -302,6 +338,7 @@ sub Text {
 }
         
 sub StartDocument {
+    my $self = shift;
     my $expat = shift;
     $doc = {};
     $descendents = {};
@@ -312,12 +349,14 @@ sub StartDocument {
 }
         
 sub EndDocument {
+    my $self = shift;
+
     return $doc;
 }
 
 
 sub PI {
-    my ($expat, $target, $data) = @_;
+    my ($self, $expat, $target, $data) = @_;
     my $attrs = {};
     $PI_position_index->{$target}++;
 
