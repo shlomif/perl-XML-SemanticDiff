@@ -380,12 +380,19 @@ sub PI {
 
     my $slug = '?' . $target . '[' . $self->PI_position_index()->{$target} . ']';
 
-    $self->doc()->{$slug}->{Attributes} = $attrs || {};
-    $self->doc()->{$slug}->{TextChecksum} = "1";
-    $self->doc()->{$slug}->{NamespaceURI} = "";
-    $self->doc()->{$slug}->{TagStart} = $expat->current_line if $self->opts()->{keeplinenums};
-    $self->doc()->{$slug}->{TagEnd} = $expat->current_line if $self->opts()->{keeplinenums};
-
+    $self->doc()->{$slug} =
+        {
+            Attributes => ($attrs || {}),
+            TextChecksum => "1",
+            NamespaceURI => "", 
+            ( $self->opts()->{keeplinenums} 
+            ? (
+                TagStart => $expat->current_line(),
+                TagEnd => $expat->current_line(),
+              )
+            : ()
+            ),
+        };
 }   
 
 1;
