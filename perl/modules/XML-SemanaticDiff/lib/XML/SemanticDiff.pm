@@ -24,6 +24,12 @@ sub _is_file
     return $specifier !~ /\n/g && -f $specifier;
 }
 
+sub _get_pathfinder_obj {
+    my $self = shift;
+
+    return XML::SemanticDiff::PathFinder::Obj->new();
+}
+
 sub read_xml {
     my $self = shift;
 
@@ -35,8 +41,7 @@ sub read_xml {
     }
     else
     {
-        my $path_finder = XML::SemanticDiff::PathFinder::Obj->new();
-        $self->{path_finder_obj} = $path_finder;
+        $self->{path_finder_obj} = $self->_get_pathfinder_obj();
 
         my $p = XML::Parser->new(
             Style => 'Stream',
