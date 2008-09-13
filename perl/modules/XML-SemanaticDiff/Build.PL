@@ -17,6 +17,11 @@ my $builder = Module::Build->new(
     },
     add_to_cleanup      => [ 'XML-SemanticDiff-*' ],
     create_makefile_pl => 'traditional',
+    meta_add => {
+        resources => {
+            Repository => "http://svn.berlios.de/svnroot/repos/web-cpan/XML-SemanticDiff/",
+        },
+    },
 );
 
 $builder->create_build_script();

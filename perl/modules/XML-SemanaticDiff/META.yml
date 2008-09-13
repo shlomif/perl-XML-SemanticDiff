@@ -6,7 +6,7 @@ author:
 abstract: Perl extension for comparing XML documents.
 license: perl
 resources:
-  license: http://dev.perl.org/licenses/
+  Repository: http://svn.berlios.de/svnroot/repos/web-cpan/XML-SemanticDiff/
 requires:
   Digest::MD5: 0
   Encode: 0
