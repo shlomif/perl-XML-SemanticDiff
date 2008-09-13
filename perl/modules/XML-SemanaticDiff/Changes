@@ -1,5 +1,7 @@
 Revision history for Perl extension XML::SemanticDiff.
 
+    - Added the LICENSE section to the POD (Kwalitee).
+
 0.97  August 08 2007
     - Added the README (Kwalitee)
     - Specified the LICENSE (as "perl") explicitly in the Makefile.PL. 
