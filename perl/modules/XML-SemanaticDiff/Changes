@@ -1,6 +1,7 @@
 Revision history for Perl extension XML::SemanticDiff.
 
     - Added the LICENSE section to the POD (Kwalitee).
+    - Added the "use warnings" (Kwalitee).
 
 0.97  August 08 2007
     - Added the README (Kwalitee)
