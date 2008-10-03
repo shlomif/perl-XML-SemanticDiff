@@ -5,7 +5,7 @@ use warnings;
 
 use vars qw/$VERSION/;
 
-$VERSION = '0.98';
+$VERSION = '0.99';
 
 use XML::Parser;
 
