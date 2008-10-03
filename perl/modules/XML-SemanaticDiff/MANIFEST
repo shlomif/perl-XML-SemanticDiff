@@ -22,5 +22,7 @@ t/10wide-chars.t
 t/11tag-in-different-locations.t
 t/12missing-element-has-o-as-cdata.t
 t/13to-doc-read.t
+t/14ignore_xpath.t
+t/15ignore_multi.t
 t/pod-coverage.t
 t/pod.t

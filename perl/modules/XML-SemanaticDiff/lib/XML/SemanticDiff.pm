@@ -83,6 +83,27 @@ sub _same_namespace
         return 0;
     }
 }
+
+sub _match_xpath {
+    my $self = shift;
+    my ($xpath, $flat_name) = @_;
+    my @x_way = split /\//, $xpath;
+    my @f_way = split /\//, $flat_name;
+    for my $i (0..$#x_way) {
+        $x_way[$i]=~s/.*?://g;
+    }           
+    for my $i (0..$#f_way) {
+        $f_way[$i]=~s/\[.*?\]$//g;
+    }   
+    return 0 if $#x_way > $#f_way;
+    for my $i (0..$#x_way) {
+        if ($x_way[$i] ne $f_way[$i]) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
 # Okay, it's pretty basic...
 #
 # We flatten each doc tree to a Perl hash where the keys are "fully qualified" 
@@ -105,6 +126,19 @@ sub compare {
 
     my $handler = $self->{diffhandler} || XML::SemanticDiff::BasicHandler->new(%$self);
 
+    # drop away nodes matching xpaths to be ignored
+    if (defined $self->{ignorexpath}) {
+        my $ignore = $self->{ignorexpath};
+        for my $path (@$ignore) {
+            for my $ref ($from_doc, $to_doc) {
+                for my $key (keys %$ref) {
+                    if ($self->_match_xpath($path, $key)) {
+                        delete $ref->{$key};
+                    }
+                }
+            }
+        }
+    }
 
     # fire the init handler
     push (@warnings, $handler->init($self)) if $handler->can('init');
@@ -469,6 +503,12 @@ Taking a blessed object as it's sole argument, this option provides a way to hoo
 custom handler class. 
 
 Please see the section on 'CUSTOM HANDLERS' below.
+
+=item  * ignorexpath
+
+This option takes array of strings as argument. Strings are interpreted as simple xpath expressions. Nodes matching these expressions are ignored during comparison. All xpath expressions should be absolute (start with '/'). 
+
+Current implementation ignores namespaces during comparison.
 
 =back
 

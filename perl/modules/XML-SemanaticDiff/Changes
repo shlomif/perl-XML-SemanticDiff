@@ -1,5 +1,7 @@
 Revision history for Perl extension XML::SemanticDiff.
 
+    - Now can exclude some paths from the comparison:
+        - http://rt.cpan.org/Ticket/Display.html?id=39705
 0.98  September 13 2008
     - Added the LICENSE section to the POD (Kwalitee).
     - Added the "use warnings" (Kwalitee).
