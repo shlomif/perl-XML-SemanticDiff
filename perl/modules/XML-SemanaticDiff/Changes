@@ -1,5 +1,9 @@
 Revision history for Perl extension XML::SemanticDiff.
 
+1.0000   July 28 2009
+    - Fixed the POD displaying:
+        - https://rt.cpan.org/Ticket/Display.html?id=48259
+
 0.99  October 03 2008
     - Now can exclude some paths from the comparison:
         - http://rt.cpan.org/Ticket/Display.html?id=39705

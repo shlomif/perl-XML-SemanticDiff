@@ -1,6 +1,6 @@
 ---
 name: XML-SemanticDiff
-version: 0.99
+version: 1.0000
 author:
   - 'Kip Hampton <khampton@cpan.org>'
 abstract: Perl extension for comparing XML documents.
@@ -17,7 +17,7 @@ configure_requires:
 provides:
   XML::SemanticDiff:
     file: lib/XML/SemanticDiff.pm
-    version: 0.99
+    version: 1.0000
   XML::SemanticDiff::BasicHandler:
     file: lib/XML/SemanticDiff/BasicHandler.pm
     version: 0.94
