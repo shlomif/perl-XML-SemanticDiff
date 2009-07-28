@@ -9,6 +9,12 @@ $VERSION = '0.99';
 
 use XML::Parser;
 
+=head1 NAME
+
+XML::SemanticDiff - Perl extension for comparing XML documents.
+
+=cut
+
 sub new {
     my ($proto, %args) = @_;
     my $class = ref($proto) || $proto;
@@ -296,17 +302,11 @@ sub StartTag {
 
     my $test_context;
  
-=begin Discard
-
-
-    if (@context){
-        $test_context = '/' . join ('/', map { $_ . '[' . $position_index->{$_} . ']' } @context);
-    }   
+    # if (@context){
+    #     $test_context = '/' . join ('/', map { $_ . '[' . $position_index->{$_} . ']' } @context);
+    # }   
         
-    $test_context .= '/' . $element . '[' . $position_index->{$element} . ']';
-=end
-
-=cut
+    # $test_context .= '/' . $element . '[' . $position_index->{$element} . ']';
 
     $test_context = $self->_calc_test_context();
 
@@ -337,18 +337,10 @@ sub EndTag {
     
     my @context = $expat->context;
 
-=begin Discard
-
-
-    if (@context){
-        $test_context = '/' . join ('/', map { $_ . '[' . $position_index->{$_} . ']' } @context);
-    }
-         
-    $test_context .= '/' . $element . '[' . $position_index->{$element} . ']';
-
-=end Discard
-
-=cut
+    # if (@context){
+    #    $test_context = '/' . join ('/', map { $_ . '[' . $position_index->{$_} . ']' } @context);
+    #} 
+    # $test_context .= '/' . $element . '[' . $position_index->{$element} . ']';
 
     my $test_context = $self->_calc_test_context();
 
@@ -442,11 +434,7 @@ sub PI {
 }   
 
 1;
-__END__
 
-=head1 NAME
-
-XML::SemanticDiff - Perl extension for comparing XML documents.
 
 =head1 SYNOPSIS
 

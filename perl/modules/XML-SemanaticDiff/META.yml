@@ -12,6 +12,8 @@ requires:
   Encode: 0
   XML::Parser: 0
   perl: 5.006
+configure_requires:
+  Module::Build: 0.34
 provides:
   XML::SemanticDiff:
     file: lib/XML/SemanticDiff.pm
@@ -23,7 +25,7 @@ provides:
     file: lib/XML/SemanticDiff.pm
   XML::SemanticDiff::PathFinder::Obj:
     file: lib/XML/SemanticDiff.pm
-generated_by: Module::Build version 0.2808
+generated_by: Module::Build version 0.34
 meta-spec:
-  url: http://module-build.sourceforge.net/META-spec-v1.2.html
-  version: 1.2
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
