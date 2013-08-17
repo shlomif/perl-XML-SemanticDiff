@@ -1,19 +1,17 @@
 ---
-name: XML-SemanticDiff
-version: 1.0000
+abstract: 'Perl extension for comparing XML documents.'
 author:
   - 'Kip Hampton <khampton@cpan.org>'
-abstract: Perl extension for comparing XML documents.
-license: perl
-resources:
-  Repository: http://svn.berlios.de/svnroot/repos/web-cpan/XML-SemanticDiff/
-requires:
-  Digest::MD5: 0
-  Encode: 0
-  XML::Parser: 0
-  perl: 5.006
+build_requires: {}
 configure_requires:
-  Module::Build: 0.34
+  Module::Build: 0.39
+dynamic_config: 1
+generated_by: 'Module::Build version 0.4007, CPAN::Meta::Converter version 2.132140'
+license: perl
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: XML-SemanticDiff
 provides:
   XML::SemanticDiff:
     file: lib/XML/SemanticDiff.pm
@@ -25,7 +23,11 @@ provides:
     file: lib/XML/SemanticDiff.pm
   XML::SemanticDiff::PathFinder::Obj:
     file: lib/XML/SemanticDiff.pm
-generated_by: Module::Build version 0.34
-meta-spec:
-  url: http://module-build.sourceforge.net/META-spec-v1.4.html
-  version: 1.4
+requires:
+  Digest::MD5: 0
+  Encode: 0
+  XML::Parser: 0
+  perl: 5.006
+resources:
+  repository: https://bitbucket.org/shlomif/perl-xml-semanticdiff
+version: 1.0000

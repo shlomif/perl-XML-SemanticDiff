@@ -5,7 +5,6 @@ eg/camelids.xml
 eg/xmlsemdiff
 lib/XML/SemanticDiff/BasicHandler.pm
 lib/XML/SemanticDiff.pm
-Makefile.PL
 MANIFEST
 META.yml                                 Module meta-data (added by MakeMaker)
 README
@@ -26,3 +25,4 @@ t/14ignore_xpath.t
 t/15ignore_multi.t
 t/pod-coverage.t
 t/pod.t
+META.json

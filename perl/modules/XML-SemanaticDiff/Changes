@@ -1,5 +1,10 @@
 Revision history for Perl extension XML::SemanticDiff.
 
+1.0001   August 17 2013
+    - Fix https://rt.cpan.org/Ticket/Display.html?id=87903
+        - Case problem with "repository" in "Build.PL".
+    - Remove trailing space.
+
 1.0000   July 28 2009
     - Fixed the POD displaying:
         - https://rt.cpan.org/Ticket/Display.html?id=48259
@@ -15,7 +20,7 @@ Revision history for Perl extension XML::SemanticDiff.
 
 0.97  August 08 2007
     - Added the README (Kwalitee)
-    - Specified the LICENSE (as "perl") explicitly in the Makefile.PL. 
+    - Specified the LICENSE (as "perl") explicitly in the Makefile.PL.
       (Kwalitee)
     - Added t/pod.t. (Kwalitee).
         - fixed the POD in the process.
@@ -29,7 +34,7 @@ Revision history for Perl extension XML::SemanticDiff.
     - Converted the "PathFinder" package in lib/XML/SemanticDiff.pm
       to "XML::SemanticDiff::PathFinder" to maintain namespace
       purity.
-    - Converted the Pkg to use an object using Non-Expat-Options. Made the 
+    - Converted the Pkg to use an object using Non-Expat-Options. Made the
       global variables as class members using accessors.
 
 0.96  July 03 2007
@@ -40,7 +45,7 @@ Revision history for Perl extension XML::SemanticDiff.
       XML tags properly. (t/09two-tags.t)
     - Applied a modified version of:
         http://rt.cpan.org/Ticket/Display.html?id=24715
-        - Fixes an exception when comparing XML with multi-byte 
+        - Fixes an exception when comparing XML with multi-byte
           characters.
         - Thanks to RMBARKER
         - t/10wide-chars.t
@@ -66,10 +71,10 @@ Revision history for Perl extension XML::SemanticDiff.
 0.91  June 12 2001
 	- second BETA release.
         - code cleanup.
-	- major doc fixes. 
+	- major doc fixes.
 
 0.50  May 25 2001
-	- initial public BETA release. 
+	- initial public BETA release.
 
 0.01  Thu May 24 10:09:38 2001
 	- original version; created by h2xs 1.19
