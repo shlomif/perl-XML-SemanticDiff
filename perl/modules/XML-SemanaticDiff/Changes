@@ -1,5 +1,9 @@
 Revision history for Perl module XML::SemanticDiff
 
+1.0002 2013-08-17
+    - Convert "Changes" (this file) to CPAN::Changes.
+    - Thanks to https://bitbucket.org/sromanov .
+
 1.0001 2013-08-17
     - Fix https://rt.cpan.org/Ticket/Display.html?id=87903
         - Case problem with "repository" in "Build.PL".

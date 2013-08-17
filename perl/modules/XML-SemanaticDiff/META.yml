@@ -15,7 +15,7 @@ name: XML-SemanticDiff
 provides:
   XML::SemanticDiff:
     file: lib/XML/SemanticDiff.pm
-    version: 1.0001
+    version: 1.0002
   XML::SemanticDiff::BasicHandler:
     file: lib/XML/SemanticDiff/BasicHandler.pm
     version: 0.94
@@ -30,4 +30,4 @@ requires:
   perl: 5.006
 resources:
   repository: https://bitbucket.org/shlomif/perl-xml-semanticdiff
-version: 1.0001
+version: 1.0002
