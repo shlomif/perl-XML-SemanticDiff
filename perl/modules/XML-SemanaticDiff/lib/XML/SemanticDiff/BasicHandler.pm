@@ -7,7 +7,7 @@ use vars qw/$VERSION/;
 
 $VERSION = '0.94';
 
-sub new {       
+sub new {
     my ($proto, %args) = @_;
     my $class = ref($proto) || $proto;
     my $self  = \%args;
@@ -21,15 +21,15 @@ sub rogue_element {
     my ($element_name, $parent) = parent_and_name($element);
     my $info = {context => $parent,
                 message => "Rogue element '$element_name' in element '$parent'."};
-    
+
     if ($self->{keeplinenums}) {
         $info->{startline} = $properties->{TagStart};
         $info->{endline}   = $properties->{TagEnd};
     }
- 
+
     if ($self->{keepdata}) {
         $info->{new_value} = $properties->{CData};
-    }    
+    }
     return $info;
 }
 
@@ -39,7 +39,7 @@ sub missing_element {
     my ($element_name, $parent) = parent_and_name($element);
     my $info = {context => $parent,
                 message => "Child element '$element_name' missing from element '$parent'."};
-                 
+
     if ($self->{keeplinenums}) {
         $info->{startline} = $properties->{TagStart};
         $info->{endline}   = $properties->{TagEnd};
@@ -57,12 +57,12 @@ sub element_value {
 
     my $info = {context => $element,
                 message => "Character differences in element '$element_name'."};
-                       
+
     if ($self->{keeplinenums}) {
         $info->{startline} = $new_properties->{TagStart};
         $info->{endline}   = $new_properties->{TagEnd};
     }
-                  
+
     if ($self->{keepdata}) {
         $info->{old_value} = $old_properties->{CData};
         $info->{new_value} = $new_properties->{CData};
@@ -72,12 +72,12 @@ sub element_value {
 }
 
 sub rogue_attribute {
-    my $self = shift;    
+    my $self = shift;
     my ($attr, $element, $properties) = @_;
     my ($element_name, $parent) = parent_and_name($element);
     my $info = {context  => $element,
                 message  => "Rogue attribute '$attr' in element '$element_name'."};
-        
+
     if ($self->{keeplinenums}) {
         $info->{startline} = $properties->{TagStart};
         $info->{endline}   = $properties->{TagEnd};
@@ -95,7 +95,7 @@ sub missing_attribute {
     my ($element_name, $parent) = parent_and_name($element);
     my $info = {context  => $element,
                 message  => "Attribute '$attr' missing from element '$element_name'."};
-         
+
     if ($self->{keeplinenums}) {
         $info->{startline} = $new_properties->{TagStart};
         $info->{endline}   = $new_properties->{TagEnd};
@@ -113,12 +113,12 @@ sub attribute_value {
     my ($element_name, $parent) = parent_and_name($element);
     my $info = {context  => $element,
                 message  => "Attribute '$attr' has different value in element '$element_name'."};
-                  
+
     if ($self->{keeplinenums}) {
         $info->{startline} = $new_properties->{TagStart};
         $info->{endline}   = $new_properties->{TagEnd};
     }
-        
+
     if ($self->{keepdata}) {
         $info->{old_value} = $old_properties->{Attributes}->{$attr};
         $info->{new_value} = $new_properties->{Attributes}->{$attr};
@@ -132,12 +132,12 @@ sub namespace_uri {
     my ($element_name, $parent) = parent_and_name($element);
     my $info = {context  => $element,
                 message  => "Element '$element_name' within different namespace."};
-            
+
     if ($self->{keeplinenums}) {
         $info->{startline} = $new_properties->{TagStart};
         $info->{endline}   = $new_properties->{TagEnd};
     }
-                            
+
     if ($self->{keepdata}) {
         $info->{old_value} = $old_properties->{NamspaceURI};
         $info->{new_value} = $new_properties->{NamspaceURI};
@@ -147,7 +147,7 @@ sub namespace_uri {
 
 sub parent_and_name {
     my $element = shift;
-    my @steps = split('/', $element);   
+    my @steps = split('/', $element);
     my $element_name = pop (@steps);
     my $parent = join '/', @steps;
     $element_name =~ s/\[\d+\]$//;
@@ -166,7 +166,7 @@ XML::SemanticDiff::BasicHandler - Default handler class for XML::SemanticDiff
 
   use XML::SemanticDiff;
   my $diff = XML::SemanticDiff->new();
-        
+
   foreach my $change ($diff->compare($file, $file2)) {
       print "$change->{message} in context $change->{context}\n";
   }
@@ -195,7 +195,7 @@ Please run perldoc XML::SemanticDiff for more information.
 Kip Hampton khampton@totalcinema.com
 
 =head1 COPYRIGHT
-                  
+
 Copyright (c) 2000 Kip Hampton. All rights reserved. This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
 
