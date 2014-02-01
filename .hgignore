@@ -3,3 +3,4 @@ perl/modules/XML-SemanaticDiff/Build
 perl/modules/XML-SemanaticDiff/META.json
 perl/modules/XML-SemanaticDiff/MYMETA.json
 perl/modules/XML-SemanaticDiff/MYMETA.yml
+perl/modules/XML-SemanaticDiff/XML-SemanticDiff-*
