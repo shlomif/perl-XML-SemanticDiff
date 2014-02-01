@@ -8,6 +8,7 @@ README
 eg/camelids.xml
 eg/camelids2.xml
 eg/xmlsemdiff
+inc/Test/Run/Builder.pm
 lib/XML/SemanticDiff.pm
 lib/XML/SemanticDiff/BasicHandler.pm
 t/01basic.t
