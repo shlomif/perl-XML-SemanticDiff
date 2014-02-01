@@ -1,13 +1,15 @@
 Build.PL
 Changes
-eg/camelids2.xml
-eg/camelids.xml
-eg/xmlsemdiff
-lib/XML/SemanticDiff/BasicHandler.pm
-lib/XML/SemanticDiff.pm
+LICENSE
 MANIFEST
+META.json
 META.yml                                 Module meta-data (added by MakeMaker)
 README
+eg/camelids.xml
+eg/camelids2.xml
+eg/xmlsemdiff
+lib/XML/SemanticDiff.pm
+lib/XML/SemanticDiff/BasicHandler.pm
 t/01basic.t
 t/02load_xml.t
 t/03simple_compare.t
@@ -26,4 +28,3 @@ t/15ignore_multi.t
 t/cpan-changes.t
 t/pod-coverage.t
 t/pod.t
-META.json

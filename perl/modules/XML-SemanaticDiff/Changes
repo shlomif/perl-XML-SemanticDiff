@@ -1,5 +1,8 @@
 Revision history for Perl module XML::SemanticDiff
 
+1.0003 2014-02-01
+    - Add separate LICENSE file (CPANTS).
+
 1.0002 2013-08-17
     - Convert "Changes" (this file) to CPAN::Changes.
     - Thanks to https://bitbucket.org/sromanov .
