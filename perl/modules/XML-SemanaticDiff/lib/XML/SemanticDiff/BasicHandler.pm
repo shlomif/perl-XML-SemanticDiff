@@ -5,7 +5,7 @@ use warnings;
 
 use vars qw/$VERSION/;
 
-$VERSION = '1.0003';
+$VERSION = '1.0004';
 
 sub new {
     my ($proto, %args) = @_;
