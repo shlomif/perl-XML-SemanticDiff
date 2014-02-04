@@ -593,7 +593,7 @@ that all of those events will be silently ignored. Consider yourself warned.
 
 Originally by Kip Hampton, khampton@totalcinema.com .
 
-Further Maintained by Shlomi Fish, shlomif@iglu.org.il .
+Further Maintained by Shlomi Fish, L<http://www.shlomifish.org/> .
 
 =head1 COPYRIGHT
 

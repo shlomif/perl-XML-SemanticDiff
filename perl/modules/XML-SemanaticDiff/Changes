@@ -1,5 +1,8 @@
 Revision history for Perl module XML::SemanticDiff
 
+1.0004 2014-02-04
+    - Update the contact info for Shlomi Fish from the old one.
+
 1.0003 2014-02-01
     - Add separate LICENSE file (CPANTS).
     - Add inc/Test/Run/Builder.pm .
