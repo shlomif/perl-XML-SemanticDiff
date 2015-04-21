@@ -1,7 +1,7 @@
 XML-SemanticDiff
 
 Semantically compare two XML files for equivalence. This is done while
-ignoring whitespace variations in the text as well as several 
+ignoring whitespace variations in the text as well as several
 permutations in the order of the tags.
 
 INSTALLATION
@@ -21,14 +21,11 @@ After installing, you can find documentation for this module with the perldoc co
 
 You can also look for information at:
 
-    Search CPAN
-        http://search.cpan.org/dist/XML-SemanticDiff
+    MetaCPAN
+        http://metacpan.org/release/XML-SemanticDiff
 
     CPAN Request Tracker:
         http://rt.cpan.org/NoAuth/Bugs.html?Dist=XML-SemanticDiff
-
-    AnnoCPAN, annotated CPAN documentation:
-        http://annocpan.org/dist/XML-SemanticDiff
 
     CPAN Ratings:
         http://cpanratings.perl.org/d/XML-SemanticDiff
