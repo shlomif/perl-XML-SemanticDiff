@@ -2,6 +2,7 @@ perl/modules/XML-SemanaticDiff/blib
 perl/modules/XML-SemanaticDiff/_build
 perl/modules/XML-SemanaticDiff/Build
 perl/modules/XML-SemanaticDiff/META.json
+perl/modules/XML-SemanaticDiff/META.yml
 perl/modules/XML-SemanaticDiff/MYMETA.json
 perl/modules/XML-SemanaticDiff/MYMETA.yml
 perl/modules/XML-SemanaticDiff/XML-SemanticDiff-*
