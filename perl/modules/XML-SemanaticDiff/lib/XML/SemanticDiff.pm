@@ -63,7 +63,7 @@ sub read_xml {
                 ? $p->parsefile($xml_specifier)
                 : $p->parse($xml_specifier)
                 ;
-        
+
         $self->{path_finder_obj} = undef;
 
         return $ret;
@@ -73,7 +73,7 @@ sub read_xml {
 sub _same_namespace
 {
     my ($self, $to, $from) = @_;
-    
+
     my $t_e = exists($to->{NamespaceURI});
     my $f_e = exists($from->{NamespaceURI});
     if (!$t_e && !$f_e)
@@ -97,10 +97,10 @@ sub _match_xpath {
     my @f_way = split /\//, $flat_name;
     for my $i (0..$#x_way) {
         $x_way[$i]=~s/.*?://g;
-    }           
+    }
     for my $i (0..$#f_way) {
         $f_way[$i]=~s/\[.*?\]$//g;
-    }   
+    }
     return 0 if $#x_way > $#f_way;
     for my $i (0..$#x_way) {
         if ($x_way[$i] ne $f_way[$i]) {
@@ -112,14 +112,14 @@ sub _match_xpath {
 
 # Okay, it's pretty basic...
 #
-# We flatten each doc tree to a Perl hash where the keys are "fully qualified" 
+# We flatten each doc tree to a Perl hash where the keys are "fully qualified"
 # XPath expressions (/root[1]/element[3]) that represent the unique location
-# of each XML element, then compare the two hashes. 
+# of each XML element, then compare the two hashes.
 #
 # Just loop over all the elements of the first hash- if the same key exists
 # in the second, you compare the text and attributes and delete it. Any
 # keys not found in the second hash are declared 'missing', and any keys leftover
-# in the second hash after looping through the elements in the first are 'rogues'. 
+# in the second hash after looping through the elements in the first are 'rogues'.
 
 sub compare {
     my $self = shift;
@@ -157,30 +157,30 @@ sub compare {
 
             # element value test
             unless ($from_doc->{$element}->{TextChecksum} eq $to_doc->{$element}->{TextChecksum}) {
-                push (@warnings, $handler->element_value($element, 
-                                                         $to_doc->{$element}, 
+                push (@warnings, $handler->element_value($element,
+                                                         $to_doc->{$element},
                                                          $from_doc->{$element}))
                           if $handler->can('element_value');
             }
-        
+
             # namespace test
             unless ($self->_same_namespace($from_doc->{$element},$to_doc->{$element})) {
-                push (@warnings, $handler->namespace_uri($element, 
-                                                         $to_doc->{$element}, 
+                push (@warnings, $handler->namespace_uri($element,
+                                                         $to_doc->{$element},
                                                          $from_doc->{$element}))
                            if $handler->can('namespace_uri');
             }
-    
+
             # attribute tests
             foreach my $attr (keys(%{$from_doc->{$element}->{Attributes}})) {
- 
+
                  # attr existence check
                  if (defined ($to_doc->{$element}->{Attributes}->{$attr})) {
 
                      # attr value test
                      if ($to_doc->{$element}->{Attributes}->{$attr} ne $from_doc->{$element}->{Attributes}->{$attr}){
-                        push (@warnings, $handler->attribute_value($attr, 
-                                                                   $element, 
+                        push (@warnings, $handler->attribute_value($attr,
+                                                                   $element,
                                                                    $to_doc->{$element},
                                                                    $from_doc->{$element}))
                               if $handler->can('attribute_value');
@@ -188,39 +188,39 @@ sub compare {
                      delete $to_doc->{$element}->{Attributes}->{$attr};
                  }
                  else {
-                     push (@warnings, $handler->missing_attribute($attr, 
-                                                                  $element, 
-                                                                  $to_doc->{$element}, 
+                     push (@warnings, $handler->missing_attribute($attr,
+                                                                  $element,
+                                                                  $to_doc->{$element},
                                                                   $from_doc->{$element}))
-                           if $handler->can('missing_attribute'); 
-                 }                
+                           if $handler->can('missing_attribute');
+                 }
             }
 
             # rogue attrs
             foreach my $leftover (keys(%{$to_doc->{$element}->{Attributes}})) {
-                push (@warnings, $handler->rogue_attribute($leftover, 
-                                                           $element, 
-                                                           $to_doc->{$element}, 
+                push (@warnings, $handler->rogue_attribute($leftover,
+                                                           $element,
+                                                           $to_doc->{$element},
                                                            $from_doc->{$element}))
                      if $handler->can('rogue_attribute');
             }
-            
+
             delete $to_doc->{$element};
         }
-        else {  
+        else {
             push (@warnings, $handler->missing_element($element, $from_doc->{$element}))
-                      if $handler->can('missing_element');          
+                      if $handler->can('missing_element');
         }
     }
 
     # rogue elements
     foreach my $leftover ( keys (%$to_doc) ) {
-        push (@warnings, $handler->rogue_element($leftover, $to_doc->{$leftover})) 
+        push (@warnings, $handler->rogue_element($leftover, $to_doc->{$leftover}))
              if $handler->can('rogue_element');
-    }                 
+    }
 
     push (@warnings, $handler->final($self)) if $handler->can('final');
-            
+
     return @warnings;
 }
 
@@ -262,7 +262,7 @@ foreach my $accessor (qw(descendents char_accumulator doc
     };
 }
 
-# PI_position_index is the position index for the PI's below - the processing 
+# PI_position_index is the position index for the PI's below - the processing
 # instructions.
 
 sub new {
@@ -285,7 +285,7 @@ sub StartTag {
 
 
     my %attrs = %_;
-            
+
     my @context = $expat->context;
     my $context_length = scalar (@context);
     my $parent = $context[$context_length -1];
@@ -293,29 +293,29 @@ sub StartTag {
 
     my $last_ctx_elem = $self->xml_context()->[-1] || { position_index => {}};
 
-    push @{$self->xml_context()}, 
+    push @{$self->xml_context()},
         {
-            element => "$element", 
+            element => "$element",
             'index' => ++$last_ctx_elem->{position_index}->{"$element"},
             position_index => {},
         };
 
     my $test_context;
- 
+
     # if (@context){
     #     $test_context = '/' . join ('/', map { $_ . '[' . $position_index->{$_} . ']' } @context);
-    # }   
-        
+    # }
+
     # $test_context .= '/' . $element . '[' . $position_index->{$element} . ']';
 
     $test_context = $self->_calc_test_context();
 
-    $self->doc()->{$test_context} = 
+    $self->doc()->{$test_context} =
     {
         NamespaceURI => ($expat->namespace($element) || ""),
         Attributes   => \%attrs,
         ($self->opts()->{keeplinenums}
-            ? ( TagStart => $expat->current_line) 
+            ? ( TagStart => $expat->current_line)
             : ()
         ),
     };
@@ -325,32 +325,32 @@ sub _calc_test_context
 {
     my $self = shift;
 
-    return 
-        join("", 
-            map { "/". $_->{'element'} . "[" . $_->{'index'} . "]" } 
+    return
+        join("",
+            map { "/". $_->{'element'} . "[" . $_->{'index'} . "]" }
             @{$self->xml_context()}
         );
 }
 
 sub EndTag {
     my ($self, $expat, $element) = @_;
-    
+
     my @context = $expat->context;
 
     # if (@context){
     #    $test_context = '/' . join ('/', map { $_ . '[' . $position_index->{$_} . ']' } @context);
-    #} 
+    #}
     # $test_context .= '/' . $element . '[' . $position_index->{$element} . ']';
 
     my $test_context = $self->_calc_test_context();
 
     my $text;
-    if ( defined( $self->char_accumulator()->{$element} )) { 
+    if ( defined( $self->char_accumulator()->{$element} )) {
         $text = $self->char_accumulator()->{$element};
         delete $self->char_accumulator()->{$element};
     }
     $text ||= 'o';
-    
+
 #    warn "text is '$text' \n";
 #    my $ctx = Digest::MD5->new;
 #    $ctx->add("$text");
@@ -360,8 +360,8 @@ sub EndTag {
     if ($self->opts()->{keepdata}) {
         $self->doc()->{"$test_context"}->{CData} = $text;
     }
-    
-    
+
+
     if (defined ( $self->descendents()->{$element})) {
         my $seen = {};
         foreach my $child (@{$self->descendents()->{$element}}) {
@@ -369,7 +369,7 @@ sub EndTag {
             $seen->{$child}++;
         }
     }
-    
+
     $self->doc()->{"$test_context"}->{TagEnd} = $expat->current_line if $self->opts()->{keeplinenums};
 
     pop(@{$self->xml_context()});
@@ -378,17 +378,17 @@ sub EndTag {
 sub Text {
     my $self = shift;
     my $expat = shift;
-    
+
     my $element = $expat->current_element;
     my $char = $_;
-    
+
     $char =~ s/^\s*//;
     $char =~ s/\s*$//;
     $char =~ s/\s+/ /g;
     $self->char_accumulator()->{$element} .= $char if $char;
-    
+
 }
-        
+
 sub StartDocument {
     my $self = shift;
     my $expat = shift;
@@ -399,7 +399,7 @@ sub StartDocument {
     $self->xml_context([]);
     $self->PI_position_index({});
 }
-        
+
 sub EndDocument {
     my $self = shift;
 
@@ -422,8 +422,8 @@ sub PI {
         {
             Attributes => ($attrs || {}),
             TextChecksum => "1",
-            NamespaceURI => "", 
-            ( $self->opts()->{keeplinenums} 
+            NamespaceURI => "",
+            ( $self->opts()->{keeplinenums}
             ? (
                 TagStart => $expat->current_line(),
                 TagEnd => $expat->current_line(),
@@ -431,7 +431,7 @@ sub PI {
             : ()
             ),
         };
-}   
+}
 
 1;
 
@@ -472,29 +472,29 @@ The new() method recognizes the following options:
 
 When this option is enabled XML::SemanticDiff will add the 'startline' and 'endline' properties (containing the line numbers
 for the reported element's start tag and end tag) to each warning. For attribute events these numbers reflect the start and
-end tags of the element which contains that attribute. 
+end tags of the element which contains that attribute.
 
 =item * keepdata
 
 When this option is enabled XML::SemanticDiff will add the 'old_value' and 'new_value' properties to each warning. These
-properties contain, surprisingly, the old and new values for the element or attribute being reported. 
+properties contain, surprisingly, the old and new values for the element or attribute being reported.
 
 In the case of missing elements or attributes (those in the first document, not in the second) only the 'old_value' property
 will be defined. Similarly, in the case of rogue elements or attributes (those in the second document but not in the
-first) only the 'new_value' property will be defined. 
+first) only the 'new_value' property will be defined.
 
 Note that using this option will greatly increase the amount of memory used by your application.
 
 =item * diffhandler
 
 Taking a blessed object as it's sole argument, this option provides a way to hook the basic semantic diff engine into your own
-custom handler class. 
+custom handler class.
 
 Please see the section on 'CUSTOM HANDLERS' below.
 
 =item  * ignorexpath
 
-This option takes array of strings as argument. Strings are interpreted as simple xpath expressions. Nodes matching these expressions are ignored during comparison. All xpath expressions should be absolute (start with '/'). 
+This option takes array of strings as argument. Strings are interpreted as simple xpath expressions. Nodes matching these expressions are ignored during comparison. All xpath expressions should be absolute (start with '/').
 
 Current implementation ignores namespaces during comparison.
 
@@ -508,7 +508,7 @@ Compares the XMLs $xml1 and $xml2 . $xml1 and $xml2 can be:
 
 =item * filenames
 
-This will be considered if it is a string that does not contain newlines and 
+This will be considered if it is a string that does not contain newlines and
 exists in the filesystem.
 
 =item * the XML text itself.
@@ -529,9 +529,9 @@ for how it is determined.
 =head1 CUSTOM HANDLERS
 
 Internally, XML::SemanticDiff uses an event-based model somewhat reminiscent of SAX where the various 'semantic diff events'
-are handed off to a separate handler class to cope with the details. For most general cases where the user only cares about 
-reporting the differences between two docs, the default handler, XML::SemanticDiff::BasicHandler, will probably  
-suffice. However, it is often desirable to add side-effects to the diff process (updating datastores, widget callbacks,  
+are handed off to a separate handler class to cope with the details. For most general cases where the user only cares about
+reporting the differences between two docs, the default handler, XML::SemanticDiff::BasicHandler, will probably
+suffice. However, it is often desirable to add side-effects to the diff process (updating datastores, widget callbacks,
 etc.) and a custom handler allows you to be creative with what to do about differences between two XML documents and how
 those differences are reported back to the application through the compare() method.
 
@@ -562,9 +562,9 @@ mixed-content elements (those containing both text and child elements mixed toge
 =head2 namespace_uri($self, $element, $todoc_element_properties, $fromdoc_element_properties)
 
 The C<namespace_uri> method handles case where the XML namespace URI differs between a given element in the two
-documents. Note that the namespace URI is checked, not the element prefixes since <foo:element/> <bar:element/> and <element/> 
+documents. Note that the namespace URI is checked, not the element prefixes since <foo:element/> <bar:element/> and <element/>
 are all considered equivalent as long as they are bound to the same namespace URI.
- 
+
 
 =head2 rogue_attribute($self, $attr_name, $element, $todoc_element_properties)
 
@@ -587,7 +587,7 @@ The C<final> method is called immediately after the two document HASHes are comp
 copy of the XML::SemanticDiff object as it's sole argument.
 
 Note that if a given method is not implemented in your custom handler class, XML::SemanticDiff will not complain; but it means
-that all of those events will be silently ignored. Consider yourself warned. 
+that all of those events will be silently ignored. Consider yourself warned.
 
 =head1 AUTHOR
 
@@ -597,8 +597,8 @@ Further Maintained by Shlomi Fish, L<http://www.shlomifish.org/> .
 
 =head1 COPYRIGHT
 
-Copyright (c) 2000 Kip Hampton. All rights reserved. This program is 
-free software; you can redistribute it and/or modify it under the same terms 
+Copyright (c) 2000 Kip Hampton. All rights reserved. This program is
+free software; you can redistribute it and/or modify it under the same terms
 as Perl itself.
 
 Shlomi Fish hereby disclaims any implicit or explicit copyrights on this
@@ -606,7 +606,7 @@ software.
 
 =head1 LICENSE
 
-This program is free software; you can redistribute it and/or modify it under 
+This program is free software; you can redistribute it and/or modify it under
 the same terms as Perl itself.
 
 =head1 SEE ALSO

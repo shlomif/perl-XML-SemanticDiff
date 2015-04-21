@@ -29,3 +29,4 @@ t/15ignore_multi.t
 t/cpan-changes.t
 t/pod-coverage.t
 t/pod.t
+t/style-trailing-space.t

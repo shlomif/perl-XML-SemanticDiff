@@ -52,7 +52,7 @@ my $xml_without_empty_element = <<'EOF';
 EOF
 
 my @results = $diff->compare(
-    $xml_with_empty_element, 
+    $xml_with_empty_element,
     $xml_without_empty_element,
 );
 

@@ -5,7 +5,7 @@ use Test::More tests => 2;
 
 use XML::SemanticDiff;
 
-my $xml1 = <<'EOX';      
+my $xml1 = <<'EOX';
 <?xml version="1.0"?>
 <root>
 <el1 el1attr="good"/>
@@ -14,7 +14,7 @@ my $xml1 = <<'EOX';
 </root>
 EOX
 
-my $xml2 = <<'EOX';      
+my $xml2 = <<'EOX';
 <?xml version="1.0"?>
 <root>
 <el1 el1attr="bad"/>
@@ -28,7 +28,7 @@ my $diff = XML::SemanticDiff->new();
 my @results = $diff->compare($xml1, $xml2);
 
 # TEST
-is (scalar(@results), 6, 
+is (scalar(@results), 6,
     "Number of results in comparing two different XML texts"
 );
 

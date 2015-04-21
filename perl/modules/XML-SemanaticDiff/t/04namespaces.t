@@ -3,7 +3,7 @@ BEGIN { plan tests => 4 }
 
 use XML::SemanticDiff;
 
-my $xml1 = <<'EOX';    
+my $xml1 = <<'EOX';
 <?xml version="1.0"?>
 <root xmlns="http://localhost/foo">
 <el1 el1attr="good"/>
@@ -12,7 +12,7 @@ my $xml1 = <<'EOX';
 </root>
 EOX
 
-my $xml2 = <<'EOX';    
+my $xml2 = <<'EOX';
 <?xml version="1.0"?>
 <foo:root xmlns:foo="http://localhost/foo">
 <foo:el1 el1attr="good"/>
@@ -21,7 +21,7 @@ my $xml2 = <<'EOX';
 </foo:root>
 EOX
 
-my $xml3 = <<'EOX';    
+my $xml3 = <<'EOX';
 <?xml version="1.0"?>
 <root xmlns="http://localhost/foo">
 <el1 xmlns="http://localhost/bar" el1attr="good"/>

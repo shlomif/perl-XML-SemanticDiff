@@ -40,7 +40,7 @@ my @results = $diff->compare($orig, $derived);
 
 # TEST
 is_deeply (
-    \@results, 
-    [], 
+    \@results,
+    [],
     "Making sure two XMLs with variation of tag locations are considered identical - per bug #18491"
 );

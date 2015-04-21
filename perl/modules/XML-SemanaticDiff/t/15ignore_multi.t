@@ -5,7 +5,7 @@ use Test::More tests => 3;
 
 use XML::SemanticDiff;
 
-my $xml1 = <<'EOX';      
+my $xml1 = <<'EOX';
 <?xml version="1.0"?>
 <root>
 <el1 el1attr="good"/>
@@ -14,7 +14,7 @@ my $xml1 = <<'EOX';
 </root>
 EOX
 
-my $xml2 = <<'EOX';      
+my $xml2 = <<'EOX';
 <?xml version="1.0"?>
 <root>
 <el1 el1attr="good"/>

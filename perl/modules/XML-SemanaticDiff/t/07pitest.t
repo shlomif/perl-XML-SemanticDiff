@@ -3,7 +3,7 @@ BEGIN { plan tests => 3 }
 
 use XML::SemanticDiff;
 
-$xml1 = <<'EOX';      
+$xml1 = <<'EOX';
 <?xml version="1.0"?>
 <?xml-stylesheet href="." type="text/xsl"?>
 <root>
@@ -11,7 +11,7 @@ $xml1 = <<'EOX';
 </root>
 EOX
 
-$xml2 = <<'EOX';      
+$xml2 = <<'EOX';
 <?xml version="1.0"?>
 <?xml-stylesheet href="." type="application/x-ubuparser" extra="bogus" ?>
 <root>
@@ -19,7 +19,7 @@ $xml2 = <<'EOX';
 </root>
 EOX
 
-$xml3 = <<'EOX';      
+$xml3 = <<'EOX';
 <?xml version="1.0"?>
 <?xml-stylesheet href="." type="text/xsl"?>
 <?xml-stylesheet href="mysheet.xsl" type="text/xsl"?>
