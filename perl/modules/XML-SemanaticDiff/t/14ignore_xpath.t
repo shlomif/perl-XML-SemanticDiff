@@ -25,15 +25,15 @@ EOX
 
 #TEST
 {
-	my $diff_simple = XML::SemanticDiff->new();
-	my @results = $diff_simple->compare($xml1, $xml2);
-	ok(@results, "XMLs are not identical");
+    my $diff_simple = XML::SemanticDiff->new();
+    my @results = $diff_simple->compare($xml1, $xml2);
+    ok(@results, "XMLs are not identical");
 }
 
 #TEST
 {
-	my $diff_ignore = XML::SemanticDiff->new(ignorexpath=>["/root/el3"]);
-	my @results = $diff_ignore->compare($xml1, $xml2);
-	ok((!@results), "XMLs should count identical if xpath /root/el3 is excluded");
+    my $diff_ignore = XML::SemanticDiff->new(ignorexpath=>["/root/el3"]);
+    my @results = $diff_ignore->compare($xml1, $xml2);
+    ok((!@results), "XMLs should count identical if xpath /root/el3 is excluded");
 }
 
