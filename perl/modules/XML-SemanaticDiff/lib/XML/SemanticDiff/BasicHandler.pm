@@ -3,9 +3,7 @@ package XML::SemanticDiff::BasicHandler;
 use strict;
 use warnings;
 
-use vars qw/$VERSION/;
-
-$VERSION = '1.0004';
+our $VERSION = '1.0005';
 
 sub new {
     my ($proto, %args) = @_;

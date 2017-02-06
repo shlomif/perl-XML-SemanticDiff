@@ -1,5 +1,10 @@
 Revision history for Perl module XML::SemanticDiff
 
+1.0005 2017-02-06
+    - Convert the distribution to use git, GitHub, and Dist-Zilla.
+    - Correct some spelling errors and add more tests.
+    - Remove trailing whitespace.
+
 1.0004 2014-02-04
     - Update the contact info for Shlomi Fish from the old one.
 
