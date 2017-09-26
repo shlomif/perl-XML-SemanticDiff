@@ -1,5 +1,9 @@
 Revision history for Perl module XML::SemanticDiff
 
+1.0006 2017-09-26
+    - Fixed a bug that was causing the code to treat
+      <element>0</element> the same as <element></element>
+
 1.0005 2017-02-06
     - Convert the distribution to use git, GitHub, and Dist-Zilla.
     - Correct some spelling errors and add more tests.

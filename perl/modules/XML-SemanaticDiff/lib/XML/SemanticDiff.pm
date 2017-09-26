@@ -5,7 +5,7 @@ use warnings;
 
 use 5.012;
 
-our $VERSION = '1.0005';
+our $VERSION = '1.0006';
 
 use XML::Parser;
 
@@ -349,14 +349,27 @@ sub EndTag {
         $text = $self->char_accumulator()->{$element};
         delete $self->char_accumulator()->{$element};
     }
-    $text ||= 'o';
+    # This isn't the correct thing to do.  If the before or after element
+    # had and 'o' and the other was undef, we would fail to find any differences
+    # Instead, when a value is undef we should be setting the the checksum
+    # to the value for an empty string since undef and empty string for a 
+    # element are the same (<element /> vs <element></element>)
+    #$text ||= 'o';
 
 #    warn "text is '$text' \n";
 #    my $ctx = Digest::MD5->new;
 #    $ctx->add("$text");
 #    $self->doc()->{"$test_context"}->{TextChecksum} = $ctx->b64digest;
 
-    $self->doc()->{"$test_context"}->{TextChecksum} = md5_base64(encode_utf8("$text"));
+    if (defined $text) {
+        $self->doc()->{"$test_context"}->{TextChecksum} = md5_base64(encode_utf8("$text"));
+    } else {
+        # In XML, a null value and an empty string should be treaded the same.
+        # Therefore, when the element is undef, we should set the TextChecksum to the same
+        # as an empty string.
+        $self->doc()->{"$test_context"}->{TextChecksum} = md5_base64(encode_utf8(""));
+    }
+
     if ($self->opts()->{keepdata}) {
         $self->doc()->{"$test_context"}->{CData} = $text;
     }
@@ -385,7 +398,9 @@ sub Text {
     $char =~ s/^\s*//;
     $char =~ s/\s*$//;
     $char =~ s/\s+/ /g;
-    $self->char_accumulator()->{$element} .= $char if $char;
+    # We should add any character that isn't undef, so check
+    # for defined here instead of checking if the value is true
+    $self->char_accumulator()->{$element} .= $char if defined($char);
 
 }
 
