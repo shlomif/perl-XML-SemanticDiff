@@ -361,14 +361,10 @@ sub EndTag {
 #    $ctx->add("$text");
 #    $self->doc()->{"$test_context"}->{TextChecksum} = $ctx->b64digest;
 
-    if (defined $text) {
-        $self->doc()->{"$test_context"}->{TextChecksum} = md5_base64(encode_utf8("$text"));
-    } else {
-        # In XML, a null value and an empty string should be treaded the same.
-        # Therefore, when the element is undef, we should set the TextChecksum to the same
-        # as an empty string.
-        $self->doc()->{"$test_context"}->{TextChecksum} = md5_base64(encode_utf8(""));
-    }
+    # In XML, a null(undef) value and an empty string should be treaded the same.
+    # Therefore, when the element is undef, we should set the TextChecksum to the same
+    # as an empty string.
+    $self->doc()->{"$test_context"}->{TextChecksum} = (defined $text) ? md5_base64(encode_utf8("$text")) :  md5_base64(encode_utf8(""));
 
     if ($self->opts()->{keepdata}) {
         $self->doc()->{"$test_context"}->{CData} = $text;
