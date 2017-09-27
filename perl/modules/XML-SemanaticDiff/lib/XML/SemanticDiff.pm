@@ -352,7 +352,7 @@ sub EndTag {
     # This isn't the correct thing to do.  If the before or after element
     # had and 'o' and the other was undef, we would fail to find any differences
     # Instead, when a value is undef we should be setting the the checksum
-    # to the value for an empty string since undef and empty string for a 
+    # to the value for an empty string since undef and empty string for a
     # element are the same (<element /> vs <element></element>)
     #$text ||= 'o';
 
