@@ -364,7 +364,12 @@ sub EndTag {
     # In XML, a null(undef) value and an empty string should be treaded the same.
     # Therefore, when the element is undef, we should set the TextChecksum to the same
     # as an empty string.
-    $self->doc()->{"$test_context"}->{TextChecksum} = (defined $text) ? md5_base64(encode_utf8("$text")) :  md5_base64(encode_utf8(""));
+    $self->doc()->{"$test_context"}->{TextChecksum} =
+        md5_base64(
+            encode_utf8(
+                (defined $text) ? "$text" : ""
+            )
+        );
 
     if ($self->opts()->{keepdata}) {
         $self->doc()->{"$test_context"}->{CData} = $text;
